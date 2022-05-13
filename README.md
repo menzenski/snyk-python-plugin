@@ -39,6 +39,9 @@ Snyk helps you find, fix and monitor for known vulnerabilities in your dependenc
 ## Supported Poetry versions (`pyproject.toml` and `poetry.lock`)
 All known versions are expected to be supported (current latest version is 1.1.6)
 
+## Supported PDM versions (`pyproject.toml` and `pdm.lock`)
+All known versions are expected to be supported (current latest version is 1.14.1)
+
 ## Snyk Python CLI Plugin
 
 This plugin provides dependency metadata for Python projects that use one of the following dependency management methods:
@@ -46,6 +49,7 @@ This plugin provides dependency metadata for Python projects that use one of the
 * `pip` with a `requirements.txt` file
 * `pipenv` with a `Pipfile` file
 * `poetry` with `pyproject.toml` and `poetry.lock`
+* `pdm` with `pyproject.toml` and `pdm.lock`
 
 There's a special `only-provenance` mode that allows extracting of top-level dependencies with
 their corresponding positions in the original manifest file.

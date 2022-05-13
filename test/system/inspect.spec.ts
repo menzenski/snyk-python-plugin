@@ -109,6 +109,37 @@ describe('inspect', () => {
     });
   });
 
+  describe('pdm projects', () => {
+    it('should return expected dependencies for pdm-app', async () => {
+      const workspace = 'pdm-app';
+      chdirWorkspaces(workspace);
+
+      const result = await inspect('.', FILENAMES.pdm.lockfile);
+      expect(result).toMatchObject({
+        plugin: {
+          name: 'snyk-python-plugin',
+          runtime: expect.any(String), // any version of Python
+          targetFile: FILENAMES.pdm.manifest,
+        },
+        package: null, // no dep-tree
+        dependencyGraph: {}, // match any dep-graph (equality checked below)
+      });
+
+      const builder = new DepGraphBuilder(
+        { name: 'pdm' },
+        { name: 'pdm-fixtures-project', version: '0.1.0' }
+      );
+      const expected = builder
+        .addPkgNode({ name: 'jinja2', version: '2.11.3' }, 'jinja2')
+        .connectDep(builder.rootNodeId, 'jinja2')
+        .addPkgNode({ name: 'markupsafe', version: '2.1.1' }, 'markupsafe')
+        .connectDep('jinja2', 'markupsafe')
+        .build();
+
+      expect(result.dependencyGraph).toEqualDepGraph(expected);
+    });
+  });
+
   describe('dep-graph', () => {
     const mockedExecuteSync = jest.spyOn(subProcess, 'executeSync');
     const mockedExecute = jest.spyOn(subProcess, 'execute');

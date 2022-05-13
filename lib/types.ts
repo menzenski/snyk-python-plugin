@@ -10,7 +10,7 @@ export interface ManifestFiles {
   [name: string]: string; // name-to-content
 }
 
-export type PackageManagers = 'pip' | 'setuptools' | 'pipenv' | 'poetry';
+export type PackageManagers = 'pip' | 'setuptools' | 'pipenv' | 'poetry' | 'pdm';
 
 export const FILENAMES: {
   [key in PackageManagers]: { manifest: string; lockfile?: string };
@@ -28,5 +28,9 @@ export const FILENAMES: {
   poetry: {
     manifest: 'pyproject.toml',
     lockfile: 'poetry.lock',
+  },
+  pdm: {
+    manifest: 'pyproject.toml',
+    lockfile: 'pdm.lock',
   },
 };
